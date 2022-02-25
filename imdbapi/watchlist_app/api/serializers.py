@@ -12,20 +12,22 @@ from watchlist_app.models import Movie
 
 class MovieSerializer(serializers.ModelSerializer):
 
+    # extra fields
+    # Can define method that calculates the length of name
+    len_name = serializers.SerializerMethodField()
+    
     class Meta:
         model = Movie
         # Can specify the fields in an array
         fields = '__all__'
         #Exclude exclude = ['name']
-        
 
-        # pass list or a tuple for each individual fields
-        '''
-            fields = ['id', 'name', 'description']       
-            
-        '''
-        
-        
+       # fields fields = ['id', 'name', 'description']       
+
+    # Serializer Method field
+    def get_len_name(self,object):
+        length = len(object.name)
+        return length
         
     
     '''
