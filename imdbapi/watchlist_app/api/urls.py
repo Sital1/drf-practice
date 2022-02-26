@@ -1,5 +1,5 @@
 from django.urls import path,include
-from watchlist_app.api.views import MovieDetailAV, MovieListAV
+from watchlist_app.api.views import WatchListAV,WatchListDetailtAV, StreamListAV, StreamDetailsAv
 
 #from watchlist_app.api.views import movie_list, movie_details
 
@@ -11,7 +11,9 @@ from watchlist_app.api.views import MovieDetailAV, MovieListAV
 # ]
 
 urlpatterns = [
-    path('', MovieListAV.as_view(), name='movie-list'),
-    path('<int:pk>', MovieDetailAV.as_view(), name='movie-detail'),
+    path('watchlists', WatchListAV.as_view(), name='movie-list'),
+    path('watchlists/<int:pk>', WatchListDetailtAV.as_view(), name='movie-detail'),
+    path('streamplatformlists', StreamListAV.as_view(), name='platform-list'),
+    path('streamplatformlists/<int:pk>', StreamDetailsAv.as_view(), name='platform-detail'),
 ]
 

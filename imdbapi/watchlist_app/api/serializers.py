@@ -3,52 +3,81 @@ from pyexpat import model
 from django.forms import ValidationError
 from rest_framework import serializers
 
-from watchlist_app.models import Movie
+from watchlist_app.models import WatchList, StreamPlatform
+
+
+
+
+
+    
 
 # Which model are we using
 # What type of fields do we need
 # Can also exclude which we don't need
 
-
-class MovieSerializer(serializers.ModelSerializer):
+class WatchListSerializer(serializers.ModelSerializer):
 
     # extra fields
     # Can define method that calculates the length of name
-    len_name = serializers.SerializerMethodField()
+    # len_name = serializers.SerializerMethodField()
     
     class Meta:
-        model = Movie
+        model = WatchList
         # Can specify the fields in an array
         fields = '__all__'
         #Exclude exclude = ['name']
 
+
+
+class StreamPlatformSerializer(serializers.ModelSerializer):
+    
+    # create a nested relationships
+    # use the name defined in related_name
+    watchlist = WatchListSerializer(many=True, read_only=True)
+    
+    ## Send only a part of nested use relation filed
+    # watchlist = serializers.StringRelatedField(many=True, read_only=True)
+    
+    
+    # Add hyperlink for the object
+    # need view name
+    # For the ID filed used HyperLinkIdentity field
+    # watchlist = serializers.HyperlinkedRelatedField(
+    #     many = True,
+    #     read_only=True,
+    #     view_name='movie-detail' )
+    
+    # class Meta:
+    #     model = StreamPlatform
+    #     fields = '__all__'
+
        # fields fields = ['id', 'name', 'description']       
 
-    # Serializer Method field
-    def get_len_name(self,object):
-        length = len(object.name)
-        return length
+    # # Serializer Method field
+    # def get_len_name(self,object):
+    #     length = len(object.name)
+    #     return length
         
     
-    '''
-        Validators still required
-    '''
+    # '''
+    #     Validators still required
+    # '''
     
-    # Field level validations
-    # value = value of the name field
-    def validate_name(self, value):
-        if len(value) < 2:
-            raise serializers.ValidationError("Name is too short")
-        else:
-            return value
+    # # Field level validations
+    # # value = value of the name field
+    # def validate_name(self, value):
+    #     if len(value) < 2:
+    #         raise serializers.ValidationError("Name is too short")
+    #     else:
+    #         return value
 
-    # Object level validation
-    # data = the whole object
-    def validate(self, data):
-        if data['name'] == data['description']:
-            raise serializers.ValidationError(
-                "Title and description should be different")
-        return data
+    # # Object level validation
+    # # data = the whole object
+    # def validate(self, data):
+    #     if data['name'] == data['description']:
+    #         raise serializers.ValidationError(
+    #             "Title and description should be different")
+    #     return data
 
     # validator is still required
 
