@@ -7,6 +7,11 @@ from watchlist_app.models import WatchList, StreamPlatform
 
 
 
+
+
+
+
+
 class WatchListAV(APIView):
     # no need to use if condition. directly define method
 
@@ -101,6 +106,16 @@ class StreamDetailsAv(APIView):
         streamPlatform.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+
+
+
+'''
+Functional views
+'''
+
 # @api_view(['GET', 'POST'])
 # def movie_list(request):
 #     if request.method == 'GET':

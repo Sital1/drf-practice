@@ -3,12 +3,18 @@ from pyexpat import model
 from django.forms import ValidationError
 from rest_framework import serializers
 
-from watchlist_app.models import WatchList, StreamPlatform
+from watchlist_app.models import WatchList, StreamPlatform, Reviews
 
 
 
 
+class ReviewSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Reviews
+        fields = '__all__'
 
+  
     
 
 # Which model are we using
@@ -20,6 +26,9 @@ class WatchListSerializer(serializers.ModelSerializer):
     # extra fields
     # Can define method that calculates the length of name
     # len_name = serializers.SerializerMethodField()
+    
+    # Nested serializer with review
+    reviews = ReviewSerializer(many=True, read_only= True)
     
     class Meta:
         model = WatchList
@@ -33,10 +42,10 @@ class StreamPlatformSerializer(serializers.ModelSerializer):
     
     # create a nested relationships
     # use the name defined in related_name
-    watchlist = WatchListSerializer(many=True, read_only=True)
+    # watchlist = WatchListSerializer(many=True, read_only=True)
     
     ## Send only a part of nested use relation filed
-    # watchlist = serializers.StringRelatedField(many=True, read_only=True)
+    watchlist = serializers.StringRelatedField(many=True, read_only=True)
     
     
     # Add hyperlink for the object
@@ -47,9 +56,9 @@ class StreamPlatformSerializer(serializers.ModelSerializer):
     #     read_only=True,
     #     view_name='movie-detail' )
     
-    # class Meta:
-    #     model = StreamPlatform
-    #     fields = '__all__'
+    class Meta:
+        model = StreamPlatform
+        fields = '__all__'
 
        # fields fields = ['id', 'name', 'description']       
 
