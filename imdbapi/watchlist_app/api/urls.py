@@ -1,7 +1,7 @@
 from unicodedata import name
 from django.urls import path, include
 from watchlist_app.api.views import (
-    WatchListAV, WatchListDetailtAV, StreamListAV, StreamDetailsAv, ReviewList, ReviewDetail)
+    WatchListAV, WatchListDetailtAV, StreamListAV, StreamDetailsAv, ReviewList, ReviewDetail,ReviewCreate)
 
 #from watchlist_app.api.views import movie_list, movie_details
 
@@ -18,6 +18,10 @@ urlpatterns = [
     path('streamplatformlists', StreamListAV.as_view(), name='platform-list'),
     path('streamplatformlists/<int:pk>',
          StreamDetailsAv.as_view(), name='platform-detail'),
-    path('reviews', ReviewList.as_view(), name='review-list'),
-    path('reviews/<int:pk>', ReviewDetail.as_view(), name='review-detail')
+    # path('reviews', ReviewList.as_view(), name='review-list'),
+    # path('reviews/<int:pk>', ReviewDetail.as_view(), name='review-detail')
+     path('watchlists/<int:pk>/review-create', ReviewCreate.as_view(), name='review-create'),
+     path('watchlists/<int:pk>/review', ReviewList.as_view(), name='review-list'),
+     path('watchlists/review/<int:pk>', ReviewDetail.as_view(), name='review-detail'),
+    
 ]

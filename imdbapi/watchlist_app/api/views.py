@@ -15,9 +15,22 @@ Concrete API views
 
 '''
 
-class ReviewList(generics.ListCreateAPIView):
-    queryset = Reviews.objects.all()
-    serializer_class = ReviewSerializer    
+class ReviewCreate(generics.CreateAPIView):
+    serializer_class = ReviewSerializer
+    
+    def perform_create(self, serializer):
+        pk = self.kwargs['pk']
+        watchlist = WatchList.objects.get(pk=pk)
+        
+        serializer.save(watchlist=watchlist)
+    
+
+class ReviewList(generics.ListAPIView):
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        return Reviews.objects.filter(watchlist = pk)
+    
+    serializer_class = ReviewSerializer        
 
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Reviews.objects.all()
