@@ -1,6 +1,7 @@
 from unicodedata import name
 from django.urls import path, include
-from watchlist_app.api.views import WatchListAV, WatchListDetailtAV, StreamListAV, StreamDetailsAv, ReviewList, ReviewDetail
+from watchlist_app.api.views import (
+    WatchListAV, WatchListDetailtAV, StreamListAV, StreamDetailsAv, ReviewList, ReviewDetail)
 
 #from watchlist_app.api.views import movie_list, movie_details
 
