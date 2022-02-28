@@ -1,5 +1,6 @@
 from turtle import update
 from django.db import models
+from django.contrib.auth.models import User
 
 from django.core.validators import MinValueValidator, MaxValueValidator
 
@@ -30,6 +31,8 @@ class WatchList(models.Model):
         return self.title
 
 class Reviews(models.Model):
+       ## User foreign key
+       review_user = models.ForeignKey(User, on_delete=models.CASCADE)
        ## with validators
        rating = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
        description = models.CharField(max_length=200, null=True)

@@ -1,3 +1,4 @@
+from asyncore import read
 from dataclasses import fields
 from pyexpat import model
 from django.forms import ValidationError
@@ -9,6 +10,8 @@ from watchlist_app.models import WatchList, StreamPlatform, Reviews
 
 
 class ReviewSerializer(serializers.ModelSerializer):
+    
+    review_serializer = serializers.StringRelatedField(read_only = True)
     
     class Meta:
         model = Reviews
