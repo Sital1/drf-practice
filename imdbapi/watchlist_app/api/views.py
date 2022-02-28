@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404
 
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 # from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.views import APIView
@@ -83,11 +84,15 @@ class ReviewCreate(generics.CreateAPIView):
 
 
 class ReviewList(generics.ListAPIView):
+    serializer_class = ReviewSerializer
+    
+    ## only authenticated user can access
+    permission_classes = [IsAuthenticated]
     def get_queryset(self):
         pk = self.kwargs['pk']
         return Reviews.objects.filter(watchlist=pk)
 
-    serializer_class = ReviewSerializer
+    
 
 
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
